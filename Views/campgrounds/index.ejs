@@ -11,6 +11,31 @@
     margin-top: 7px;
     margin-left: calc(-50vw + 50%);
   }
+  #noResults {
+    width: 30%;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 30px;
+    border: 3px solid rgb(255, 65, 65);
+    background-color: rgb(255, 65, 65);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  @keyframes moveSideToSide {
+    50% {
+      transform: translateY(-2px) translateX(-2px) translateZ(-2px);
+    }
+    100% {
+      transform: translateY(0px) translateX(0px) translateZ(0px);
+    }
+  }
+
+  #noResults.animation {
+    animation: moveSideToSide 0.5s infinite;
+  }
 </style>
 
 <div id="map"></div>
@@ -43,6 +68,9 @@
       >
       <input class="form-control mb-4" type="text" id="search" name="search" />
     </div>
+  </div>
+  <div id="noResults" style="display: none" class="text-center my-3">
+    No campgrounds found.
   </div>
   <% for (let campground of campgrounds) { %>
   <div class="card mb-3">
