@@ -3,6 +3,17 @@ const cards = document.querySelectorAll(".card");
 const noResultShow = document.getElementById(`noResults`);
 
 window.addEventListener("load", () => {
+  const spinner = document.getElementById("spinner");
+  setTimeout(() => {
+    if (spinner) {
+      spinner.remove();
+    }
+  }, 2000);
+  const content = document.getElementById("mainContent");
+  if (content) {
+    content.style.display = "block";
+  }
+
   searchBox.addEventListener("input", () => {
     const searchedKey = searchBox.value.trim().toLowerCase();
 
