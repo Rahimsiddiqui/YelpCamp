@@ -1,0 +1,145 @@
+<% layout(`Layout/boilerplate`) %>
+
+<div id="mainContent">
+  <div class="container my-5 d-flex justify-content-center align-items-center">
+    <div class="col-md-6 col-xl-5">
+      <div class="card shadow">
+        <img
+          src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="..."
+          loading="lazy"
+          class="card-img-top rounded-top"
+        />
+        <div class="card-body p-4">
+          <h2 class="card-title text-center mb-3">Register</h2>
+          <form
+            action="/register"
+            method="post"
+            class="validate-form"
+            novalidate
+          >
+            <div class="mb-3">
+              <label class="form-label" for="username">Username</label>
+              <input
+                class="form-control"
+                type="text"
+                id="username"
+                name="username"
+                placeholder="example"
+                autofocus
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">
+                Please provide a valid username.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="email">E-mail</label>
+              <input
+                class="form-control"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="example123@gmail.com"
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please provide a valid email.</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="password">Password</label>
+              <div class="position-relative">
+                <input
+                  class="form-control pe-5"
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="********"
+                  style="border-radius: 10px"
+                  required
+                />
+                <button
+                  type="button"
+                  id="changeType1"
+                  class="btn btn-sm p-0 border-0 bg-transparent position-absolute top-50 translate-middle-y"
+                  style="right: 10px"
+                >
+                  <i class="bi bi-eye-slash"></i>
+                </button>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">
+                Please provide a valid password.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="confirmPassword"
+                >Confirm Password</label
+              >
+              <div class="position-relative">
+                <input
+                  class="form-control pe-5"
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="********"
+                  style="border-radius: 10px"
+                  required
+                />
+                <button
+                  type="button"
+                  id="changeType2"
+                  class="btn btn-sm p-0 border-0 bg-transparent position-absolute top-50 translate-middle-y"
+                  style="right: 10px"
+                >
+                  <i class="bi bi-eye-slash"></i>
+                </button>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Passwords Must Be Same.</div>
+            </div>
+
+            <button class="btn btn-success w-100 mt-2">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setupPasswordToggle(btnId, inputId) {
+    const btn = document.querySelector(`#${btnId}`);
+    const input = document.querySelector(`#${inputId}`);
+
+    function showPass() {
+      input.type = `text`;
+      btn.innerHTML = `<i class="bi bi-eye"></i>`;
+    }
+
+    function hidePass() {
+      input.type = `password`;
+      btn.innerHTML = `<i class="bi bi-eye-slash"></i>`;
+    }
+
+    // PC
+    btn.addEventListener("mousedown", showPass);
+    btn.addEventListener("mouseup", hidePass);
+    btn.addEventListener("mouseleave", hidePass);
+
+    // MOBILE
+    btn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      showPass();
+    });
+    btn.addEventListener("touchend", hidePass);
+  }
+
+  // initialize both fields
+  setupPasswordToggle("changeType1", "password");
+  setupPasswordToggle("changeType2", "confirmPassword");
+</script>

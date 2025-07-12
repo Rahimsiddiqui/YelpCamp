@@ -1,0 +1,98 @@
+<% layout(`Layout/boilerplate`) %>
+
+<div id="mainContent">
+  <div class="container my-5 d-flex justify-content-center align-items-center">
+    <div class="col-md-6 col-xl-5">
+      <div class="card shadow">
+        <img
+          src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="..."
+          loading="lazy"
+          class="object-fit: cover; object-position: center; card-img-top rounded-top"
+        />
+        <div class="card-body p-4">
+          <h2 class="card-title text-center mb-3">Login</h2>
+          <form action="/login" method="post" class="validate-form" novalidate>
+            <div class="mb-3">
+              <label class="form-label" for="username">Username</label>
+              <input
+                class="form-control"
+                type="text"
+                id="username"
+                name="username"
+                placeholder="example"
+                style="border-radius: 10px"
+                autofocus
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">
+                Please provide a valid username.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="password">Password</label>
+              <div class="position-relative">
+                <input
+                  class="form-control pe-5"
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="********"
+                  style="border-radius: 10px"
+                  required
+                />
+                <button
+                  type="button"
+                  id="changeType"
+                  class="btn btn-sm p-0 border-0 bg-transparent position-absolute top-50 translate-middle-y"
+                  style="right: 10px"
+                >
+                  <i class="bi bi-eye-slash"></i>
+                </button>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">
+                Please provide a valid password.
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 mt-2">
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const btn = document.querySelector(`#changeType`);
+  const passwordBox = document.querySelector(`#password`);
+
+  function showPass() {
+    passwordBox.type = `text`;
+    btn.innerHTML = `<i class="bi bi-eye"></i>`;
+  }
+
+  function hidePass() {
+    passwordBox.type = `password`;
+    btn.innerHTML = `<i class="bi bi-eye-slash"></i>`;
+  }
+
+  // PC
+
+  btn.addEventListener("mousedown", showPass);
+  btn.addEventListener("mouseup", hidePass);
+  btn.addEventListener("mouseleave", hidePass);
+
+  // MOBILE
+
+  btn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    showPass();
+  });
+  btn.addEventListener("touchend", hidePass);
+</script>

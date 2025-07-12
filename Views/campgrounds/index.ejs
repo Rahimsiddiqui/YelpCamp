@@ -1,0 +1,101 @@
+<% layout('Layout/boilerplate') %>
+
+<style>
+  html,
+  body {
+    overflow-x: hidden;
+  }
+  #map {
+    width: 100vw;
+    height: 500px;
+    margin-top: 7px;
+    margin-left: calc(-50vw + 50%);
+  }
+</style>
+
+<div id="map"></div>
+
+<script id="campgrounds-data" type="application/json">
+  <%- JSON.stringify(campgrounds) %>
+</script>
+
+<div
+  id="spinner"
+  class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex justify-content-center align-items-center"
+  style="z-index: 9999"
+>
+  <div
+    class="spinner-border text-light"
+    style="width: 3rem; height: 3rem"
+    role="status"
+  >
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div id="mainContent" style="display: none">
+  <h1 class="mt-3 mb-4 text-center">Search and View Our Campgrounds:</h1>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-10">
+      <label class="form-label" for="search" style="margin-left: 4px"
+        >Search</label
+      >
+      <input class="form-control mb-4" type="text" id="search" name="search" />
+    </div>
+  </div>
+  <% for (let campground of campgrounds) { %>
+  <div class="card mb-3">
+    <div class="row">
+      <div class="col-md-4">
+        <img
+          class="img-fluid"
+          loading="lazy"
+          style="
+            height: 350px;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+          "
+          src="<%= campground.image?.[0]?.url %>"
+        />
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"><%= campground.title %></h5>
+          <p class="card-text"><%= campground.description %></p>
+          <p class="card-text">
+            <small class="text-muted"><%= campground.location %></small>
+          </p>
+          <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>"
+            >View <%= campground.title %></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</div>
+
+<link
+  href="https://unpkg.com/maplibre-gl@3.3.1/dist/maplibre-gl.css"
+  rel="stylesheet"
+/>
+
+<script src="https://unpkg.com/maplibre-gl@3.3.1/dist/maplibre-gl.js"></script>
+<script src="/Javascripts/clusterMaps.js"></script>
+
+<script>
+  window.addEventListener("load", () => {
+    const spinner = document.getElementById("spinner");
+    setTimeout(() => {
+      if (spinner) {
+        spinner.remove();
+      }
+    }, 2000);
+    const content = document.getElementById("mainContent");
+    if (content) {
+      content.style.display = "block";
+    }
+  });
+</script>

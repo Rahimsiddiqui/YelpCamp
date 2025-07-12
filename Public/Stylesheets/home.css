@@ -1,0 +1,61 @@
+body {
+  height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://images.unsplash.com/photo-1533575770077-052fa2c609fc?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+  background-position: center;
+  text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 5rem 0.1rem rgba(0, 0, 0, 0.5);
+  transition: border-bottom-color 0.2s ease-in, color 0.2s ease-in;
+}
+
+.cover-container {
+  max-width: 60vw;
+}
+
+.nav-link {
+  padding: 0.25rem 0;
+  margin-left: 1rem;
+  font-weight: 700;
+  border-bottom: 0.25rem solid transparent;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.nav-link:hover {
+  color: rgba(255, 255, 255, 0.8);
+  border-bottom-color: rgba(255, 255, 255, 0.8);
+}
+
+.nav-link:active {
+  color: white;
+  border-bottom-color: white;
+}
+
+a.btn,
+a.btn:hover,
+a.btn:active,
+a.btn:focus {
+  background-color: white !important;
+  color: rgb(50, 50, 50) !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+a.btn {
+  color: rgb(50, 50, 50);
+  text-shadow: none;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+}
+
+a.btn:hover {
+  background-color: rgb(245, 245, 245);
+  transform: scale(1.05);
+  text-shadow: none;
+}
+
+a.btn:active {
+  transform: scale(0.95) translateY(2px);
+  background-color: rgb(240, 240, 240);
+  text-shadow: none;
+}

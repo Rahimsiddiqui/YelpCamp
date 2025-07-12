@@ -1,0 +1,225 @@
+<style>
+  html,
+  body,
+  #mainContent {
+    transition: background-color 0.35s ease-in-out,
+      border-color 0.35s ease-in-out, color 0.35s ease-in-out;
+  }
+
+  html[theme="light"] body,
+  html[theme="light"] #mainContent {
+    background-color: #fff;
+    color: #111;
+  }
+
+  html[theme="dark"] body,
+  html[theme="dark"] #mainContent {
+    background-color: #111;
+    color: #eee;
+  }
+
+  html[theme="dark"] #mainContent .card {
+    background-color: #222;
+    color: #eee;
+    border-color: #333;
+  }
+
+  html[theme="dark"] #mainContent .form-control {
+    background-color: #222;
+    color: #eee;
+    border-color: #444;
+  }
+
+  html[theme="dark"] #mainContent .btn {
+    background-color: #333;
+    color: #eee;
+    border-color: #444;
+  }
+
+  html[theme="dark"] #mainContent .btn:hover {
+    background-color: #444;
+    color: #fff;
+  }
+
+  html[theme="dark"] #mainContent .list-group-item {
+    background-color: #222;
+    border-color: #444;
+    color: #fff;
+  }
+
+  html[theme="dark"] #mainContent .input-group-text {
+    background-color: #222;
+    border-color: #444;
+    color: #fff;
+  }
+
+  [data-theme="dark"] {
+    border-radius: 25px;
+    background-color: rgb(10, 10, 10);
+    padding: 10px;
+    width: 15%;
+    border: none;
+    color: rgb(245, 245, 245);
+    transition: color 0.35s ease-in-out, transform 0.35s ease-in-out,
+      background-color 0.35s ease-in-out;
+  }
+
+  [data-theme="light"] {
+    border-radius: 25px;
+    background-color: rgb(245, 245, 245);
+    padding: 10px;
+    width: 15%;
+    border: none;
+    color: rgb(10, 10, 10);
+    transition: color 0.35s ease-in-out, transform 0.35s ease-in-out,
+      background-color 0.35s ease-in-out;
+  }
+
+  #toggleBtn {
+    width: 15%;
+  }
+
+  @media (max-width: 768px) {
+    #toggleBtn {
+      width: 35%;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    #toggleBtn {
+      width: 40%;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      text-align: center;
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  #toggleBtn.animate {
+    animation: pulse 1.2s ease-in-out infinite;
+    will-change: transform;
+  }
+</style>
+
+<header class="mb-auto">
+  <div class="mainContent">
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">YelpCamp</a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarYelpCamp"
+          aria-controls="navbarYelpCamp"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarYelpCamp">
+          <ul class="navbar-nav me-auto mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/campgrounds">Campgrounds</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/campgrounds/new">New Campground</a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav ms-md-auto mb-2 mb-md-0">
+            <% if (!currentUser) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/register">Register</a>
+            </li>
+            <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <button
+      class="fixed-bottom offset-md-5 mb-3"
+      data-theme="light"
+      id="toggleBtn"
+    >
+      Toggle Dark Theme 🌑
+    </button>
+  </div>
+</header>
+
+<script>
+  const toggleBtn = document.querySelector(`#toggleBtn`);
+  const html = document.documentElement;
+
+  function saveDarkAttribute() {
+    html.setAttribute("theme", "dark");
+    toggleBtn.setAttribute("data-theme", "dark");
+    toggleBtn.textContent = `Toggle Light Theme ☀️`;
+  }
+
+  function saveLightAttribute() {
+    html.setAttribute("theme", "light");
+    toggleBtn.setAttribute("data-theme", "light");
+    toggleBtn.textContent = `Toggle Dark Theme 🌑`;
+  }
+
+  document.addEventListener(`DOMContentLoaded`, () => {
+    const savedTheme = localStorage.getItem(`theme`);
+
+    switch (savedTheme) {
+      case "dark":
+        saveDarkAttribute();
+        break;
+      case "light":
+        saveLightAttribute();
+        break;
+    }
+  });
+
+  toggleBtn.addEventListener(`click`, () => {
+    const currentTheme = html.getAttribute(`theme`);
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+    switch (newTheme) {
+      case "dark":
+        saveDarkAttribute();
+        break;
+      case "light":
+        saveLightAttribute();
+        break;
+    }
+
+    localStorage.setItem(`theme`, newTheme);
+  });
+
+  toggleBtn.classList.add("animate");
+</script>

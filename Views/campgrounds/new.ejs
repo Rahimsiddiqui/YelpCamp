@@ -1,0 +1,136 @@
+<% layout(`Layout/boilerplate`) %>
+
+<div
+  id="spinner"
+  class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex justify-content-center align-items-center"
+  style="z-index: 9999"
+>
+  <div
+    class="spinner-border text-light"
+    style="width: 3rem; height: 3rem"
+    role="status"
+  >
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<style>
+  .card {
+    border: none;
+  }
+</style>
+
+<div id="mainContent" class="my-5" style="display: none">
+  <div class="container d-flex justify-content-center align-items-center">
+    <div class="col-md-6 col-xl-6">
+      <div class="card shadow">
+        <div class="card-body p-4">
+          <h2 class="card-title text-center mb-3">Create Campground</h2>
+          <form
+            action="/campgrounds"
+            method="post"
+            class="validate-form"
+            novalidate
+            enctype="multipart/form-data"
+          >
+            <div class="mb-3">
+              <label class="form-label" for="title">Title</label>
+              <input
+                class="form-control"
+                type="text"
+                id="title"
+                name="title"
+                autofocus
+                required
+              />
+              <div class="valid-feedback">Looks Good!</div>
+              <div class="invalid-feedback">Please provide a valid title.</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="location">Location</label>
+              <input
+                class="form-control"
+                type="text"
+                id="location"
+                name="location"
+                required
+              />
+              <div class="valid-feedback">Looks Good!</div>
+              <div class="invalid-feedback">
+                Please provide a valid location.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="price">Campground Price</label>
+              <div class="input-group">
+                <span class="input-group-text" id="price-label">$</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="price"
+                  name="price"
+                  placeholder="0.00"
+                  aria-label="price"
+                  aria-describedby="price-label"
+                  required
+                />
+                <div class="valid-feedback">Looks Good!</div>
+                <div class="invalid-feedback">
+                  Please provide a valid price.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="description">Description</label>
+              <textarea
+                class="form-control"
+                id="description"
+                name="description"
+                style="resize: none"
+                rows="3"
+                required
+              ></textarea>
+              <div class="valid-feedback">Looks Good!</div>
+              <div class="invalid-feedback">
+                Please provide a valid description.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="image" class="form-label">Upload Images</label>
+              <input
+                class="form-control"
+                type="file"
+                id="image"
+                name="image"
+                multiple
+              />
+            </div>
+
+            <div class="mb-3">
+              <button class="btn btn-success w-100 mt-2">Add Campground</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.addEventListener("load", () => {
+    const spinner = document.getElementById("spinner");
+    setTimeout(() => {
+      if (spinner) {
+        spinner.remove();
+      }
+    }, 500);
+    const content = document.getElementById("mainContent");
+    if (content) {
+      content.style.display = "block";
+    }
+  });
+</script>

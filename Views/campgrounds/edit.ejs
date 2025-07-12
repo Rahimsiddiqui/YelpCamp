@@ -1,0 +1,204 @@
+<% layout(`Layout/boilerplate`) %>
+
+<div
+  id="spinner"
+  class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex justify-content-center align-items-center"
+  style="z-index: 9999"
+>
+  <div
+    class="spinner-border text-light"
+    style="width: 3rem; height: 3rem"
+    role="status"
+  >
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<style>
+  .card {
+    border: none;
+  }
+</style>
+
+<div id="mainContent" style="display: none">
+  <div class="container my-5 d-flex justify-content-center align-items-center">
+    <div class="col-md-6 col-xl-6">
+      <div class="card shadow">
+        <img
+          src="<%= foundCamp.image[0].url %>"
+          alt="Main Campground Image"
+          class="card-img-top rounded-top"
+          loading="lazy"
+          style="
+            height: 400px;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+          "
+        />
+
+        <div class="card-body p-4">
+          <h2 class="card-title text-center mb-3">Edit Campground</h2>
+          <form
+            action="/campgrounds/<%= foundCamp._id %>?_method=patch"
+            method="post"
+            class="validate-form"
+            enctype="multipart/form-data"
+            novalidate
+          >
+            <div class="mb-3">
+              <label class="form-label" for="title">Edit Title</label>
+              <input
+                class="form-control"
+                type="text"
+                id="title"
+                name="title"
+                value="<%= foundCamp.title %>"
+                autofocus
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please provide a valid title.</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="location">Edit Location</label>
+              <input
+                class="form-control"
+                type="text"
+                id="location"
+                name="location"
+                value="<%= foundCamp.location %>"
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">
+                Please provide a valid location.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="price">Edit Price</label>
+              <div class="input-group">
+                <span class="input-group-text" id="price-label">$</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="price"
+                  name="price"
+                  value="<%= foundCamp.price %>"
+                  aria-label="price"
+                  aria-describedby="price-label"
+                  required
+                />
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">
+                  Please provide a valid price.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="description"
+                >Edit Description</label
+              >
+              <textarea
+                class="form-control"
+                type="text"
+                id="description"
+                name="description"
+                style="resize: none"
+                rows="3"
+                required
+              >
+<%= foundCamp.description %></textarea
+              >
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">
+                Please provide a valid description.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="image" class="form-label">Upload More Images</label>
+              <input
+                class="form-control"
+                type="file"
+                id="image"
+                name="image"
+                multiple
+              />
+            </div>
+
+            <div class="container mb-4">
+              <div class="row g-4">
+                <% foundCamp.image.forEach((img, i) => { %>
+                <div
+                  class="col-6 d-flex justify-content-<%= (i % 2 === 0) ? 'start' : 'end' %>"
+                >
+                  <div
+                    class="position-relative rounded shadow"
+                    style="width: 220px; height: 220px; overflow: hidden"
+                  >
+                    <img
+                      src="<%= img.url %>"
+                      class="img-fluid rounded"
+                      style="width: 100%; height: 100%; object-fit: cover"
+                    />
+                    <input
+                      type="checkbox"
+                      id="image-<%= i %>"
+                      name="deleteImages[]"
+                      value="<%= img.filename %>"
+                      class="form-check-input position-absolute"
+                      style="
+                        top: 10px;
+                        left: 10px;
+                        transform: scale(1.5);
+                        background-color: rgba(255, 255, 255, 0.7);
+                      "
+                    />
+                    <label
+                      for="image-<%= i %>"
+                      class="position-absolute text-white px-2 py-1 rounded"
+                      style="
+                        top: 10px;
+                        left: 45px;
+                        background: rgba(0, 0, 0, 0.5);
+                        font-size: 0.85rem;
+                      "
+                    >
+                      Delete?
+                    </label>
+                  </div>
+                </div>
+                <% }) %>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <div class="text-center">
+                <button class="btn btn-info w-100">Save Changes</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.addEventListener("load", () => {
+    const spinner = document.getElementById("spinner");
+    setTimeout(() => {
+      if (spinner) {
+        spinner.remove();
+      }
+    }, 500);
+    const content = document.getElementById("mainContent");
+    if (content) {
+      content.style.display = "block";
+    }
+  });
+</script>
